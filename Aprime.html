@@ -3,15 +3,14 @@
 <html>
 	<head>
 	<style>
-	    div#auc {color: red; font-size: 18pt;}
-  </style>
-		<title>Area under the ROC curve</title>
-		
+		div#auc {color: red; font-size: 18pt;}
+	</style>
+	<title>Area under the ROC curve</title>
 
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-    </script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+	</script>
 		
-		<script>
+	<script>
 		
 		function getData(){
 			var readData = $("textarea").val()
@@ -28,7 +27,7 @@
 				if ((line.length == 2) && ((line[0] == "Y") || (line[0] == "N"))) {
 				  arr[lineCount] = [line[1], false];
 					if (line[0] == "Y"){
-					  positive++;
+						positive++;
 						arr[lineCount][1] = true;
 					};
 					lineCount++;
@@ -66,7 +65,7 @@ class (Yes or No) and a predicted class. The predicted class is a real
 number between 0 and 1 which represents the probability that the actual class
 is Yes.
 
-<p>This program expects two columns of tab-delimited data. (Try pasting from Excel.)
+<p>This program expects two columns of tab-delimited data.
 <ul>
 <li>The first column contains either Y or N, indicating the actual class.
 </li>
@@ -93,7 +92,5 @@ Y	0.417204888
 <button id="clear">Clear</button>
 <button id="submit">Submit</button>
 
-<div id="debug">
-</div>
 </body>
 </html>
