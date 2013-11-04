@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	<style>
+	    div#auc {color: red; font-size: 18pt;}
+  </style>
+		<title>Area under the ROC curve</title>
+		
+
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+		
+		<script>
+		
+		function getData(){
+			var readData = $("textarea").val()
+			var lines = readData.split("\n");
+			var numLines = lines.length;
+			var arr = new Array();
+			var positive = 0;
+			var negative = 0;
+			var lineCount = 0;
+			var area = 0;
+			var falseNegative = 0;
+			for (var i=0; i<numLines; i++){
+				var line = lines[i].split("\t");
+				if ((line.length == 2) && ((line[0] == "Y") || (line[0] == "N"))) {
+				  arr[lineCount] = [line[1], false];
+					if (line[0] == "Y"){
+					  positive++;
+						arr[lineCount][1] = true;
+					};
+					lineCount++;
+				};
+				negative = lineCount - positive;
+			};
+			arr.sort();
+			for (var i=0; i<lineCount; i++){
+				if (arr[i][1]) {
+				  area += falseNegative;
+				} else {
+				  falseNegative++;
+				};
+			};
+			$("#auc").text("The area is " + area/(negative*positive));
+		};
+		
+		$(document).ready(function(){
+			$("#clear").click(function(){
+				$("textarea").val("");
+				$("#auc").text("");});
+			$("#submit").click(getData);
+		});
+		</script>
+	</head>
+	
+
+<body>
+<h1>Area under the ROC curve</h1>
+<div id="auc"> </div>
+
+<p>This page contains a JavaScript applet for measuring the quality of
+a binary classifier. We assume that each observation contains the actual
+class (Yes or No) and a predicted class. The predicted class is a real
+number between 0 and 1 which represents the probability that the actual class
+is Yes.
+
+<p>This program expects two columns of tab-delimited data. (Try pasting from Excel.)
+<ul>
+<li>The first column contains either Y or N, indicating the actual class.
+</li>
+<li>The second column contains numbers between 0 and 1, representing the
+predicted class.
+</li>
+<li>The first row is assumed to be a header row, and is ignored.
+</li>
+<li>If you copy and paste from Excel then the data should be in the expected format.
+</li>
+</ul>
+
+<p>Sample data is shown below.  Click "Clear", paste your data into the box, 
+then click "Submit".
+<br>
+<textarea rows="20" cols="50">
+Data	Predicted (Model)
+Y	0.225135637
+N	0.015354609
+N	0.0001
+Y	0.417204888
+</textarea>
+<br>
+<button id="clear">Clear</button>
+<button id="submit">Submit</button>
+
+<div id="debug">
+</div>
+</body>
+</html>
