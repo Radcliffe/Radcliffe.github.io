@@ -21,6 +21,11 @@
 			var negative = 0;
 			var lineCount = 0;
 			var area = 0;
+			var x = 0;
+			var y = 0;
+			var dx = 0;
+			var dy = 0;
+			var pred = -1;
 			var falseNegative = 0;
 			for (var i=0; i<numLines; i++){
 				var line = lines[i].split("\t");
@@ -37,12 +42,22 @@
 			arr.sort();
 			for (var i=0; i<lineCount; i++){
 				if (arr[i][1]) {
-				  area += falseNegative;
+				  dx++;
 				} else {
-				  falseNegative++;
+				  dy++;
 				};
+				if (arr[i][0] != pred) {
+				  pred = arr[i][0];
+				  area += dx * (y + dy/2);
+				  x += dx;
+				  y += dy;
+				  dx = 0;
+				  dy = 0;
+				};
+			area += dx * (y + dy/2);
 			};
 			$("#auc").text("The area is " + area/(negative*positive));
+			console.log(area + "/" + positive*negative);
 		};
 		
 		$(document).ready(function(){
