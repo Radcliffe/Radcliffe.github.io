@@ -1,11 +1,17 @@
+
 <!DOCTYPE html>
 
 <html>
 	<head>
 	<style>
-		div#auc {color: red; font-size: 18pt;}
+		p	{font-size:14pt;font-family:sanf-serif;}
+		p#auc {color: red; font-size: 18pt; text-align:center}
+		h1	{text-align:center;font-size:20pt;font-family:serif;}
+		ul	{list-style:circle;padding:0px;margin:30px;}
+		li	{padding-left:1em; text-indent: -1em;font-size:14pt;}
+		
 	</style>
-	<title>Area under the ROC curve</title>
+	<title>A' statistic</title>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 	</script>
@@ -25,12 +31,12 @@
 			var y = 0;
 			var dx = 0;
 			var dy = 0;
-			var falseNegative = 0;
 			for (var i=0; i<numLines; i++){
-				var line = lines[i].split("\t");
-				if ((line.length == 2) && ((line[0] == "Y") || (line[0] == "N"))) {
-				  arr[lineCount] = [line[1], false];
-					if (line[0] == "Y"){
+				var line = lines[i].split(/[ \t,]+/);
+				if ((line.length > 1) && 
+				((line[0] == "Y") || (line[0] == "N") || (line[0] == "y") || (line[0] == "n"))) {
+					arr[lineCount] = [line[1], false];
+					if ((line[0] == "Y") || (line[0] == 'y')){
 						positive++;
 						arr[lineCount][1] = true;
 					};
@@ -53,7 +59,7 @@
 				  dy = 0;
 				};
 			};
-			$("#auc").text("The area is " + area/(negative*positive));
+			$("#auc").text("A' = " + area/(negative*positive));
 		};
 		
 		$(document).ready(function(){
@@ -62,37 +68,32 @@
 				$("#auc").text("");});
 			$("#submit").click(getData);
 		});
-		</script>
+	</script>
 	</head>
 	
 
 <body>
-<h1>Area under the ROC curve</h1>
-<div id="auc"> </div>
+<h1>A' statistic</h1>
+<p id="auc"> </p>
 
-<p>This page contains a JavaScript applet for measuring the quality of
-a binary classifier. We assume that each observation contains the actual
-class (Yes or No) and a predicted class. The predicted class is a real
-number between 0 and 1 which represents the probability that the actual class
-is Yes.
+<p>This JavaScript program computes the A' statistic for a binary classifier. 
+See <a href="APrime.pdf">this article</a> for an explanation of the statistic and how it is computed.
 
-<p>This program expects two columns of tab-delimited data.
+<p>How to enter your data:</p>
 <ul>
-<li>The first column contains either Y or N, indicating the actual class.
-</li>
-<li>The second column contains numbers between 0 and 1, representing the
-predicted class.
-</li>
-<li>The first row is assumed to be a header row, and is ignored.
-</li>
-<li>If you copy and paste from Excel then the data should be in the expected format.
-</li>
+<li>Each row of the input contains two entries. </li>
+<li>The entries may be separated by tabs, spaces, or commas.</li>
+<li>The first entry is either Y or N, indicating the positive or negative class.</li>
+<li>The second entry is a real number which represents the model prediction.</li>
+<li>Any rows that do not begin with Y or N will be ignored.</li>
+<li>It is recommend that you paste data from Excel or other spreadsheet program.
 </ul>
 
 <p>Sample data is shown below.  Click "Clear", paste your data into the box, 
 then click "Submit".
 <br>
-<textarea rows="20" cols="50">
+<br>
+<textarea rows="20" cols="50" style="background-color:#e0e0ff;font-weight:bold;">
 Data	Predicted (Model)
 Y	0.225135637
 N	0.015354609
