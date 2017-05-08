@@ -11,9 +11,15 @@ $(document).ready(() => {
   sectionDetails.hide();
 
   const books = data.books;
-  books.forEach((book, index) => {
-    bookRackItems.append(makeCard(book, index));
-  });
+
+  function redraw() {
+    bookRackItems.empty();
+    books.forEach((book, index) => {
+      bookRackItems.append(makeCard(book, index));
+    });
+  }
+
+  redraw();
 
   function makeCard(book, index) {
     console.log('makeCard');
@@ -82,5 +88,22 @@ $(document).ready(() => {
     readingDetails.hide();
     sectionDetails.show();
   });
+  // addNewBook = () => {
+  //   let books = this.state.books;
+  //   books.unshift({
+  //     id: Date.now(),
+  //     title: 'New reading',
+  //     src: '/logo1.png'
+  //   });
+  //   this.setState({books});
 
+  $('#add-reading').click((event) => {
+    books.unshift({
+      id: Date.now(),
+      title: 'New reading',
+      author: '',
+      src: 'logo1.png'
+    });
+    redraw();
+  });
 });
