@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div id="book-rack">
+        <h1>GogyUp Content Manager</h1>
+        <button>Add Reading</button>
+        <div id="book-rack-items" class="grid"></div>
+      </div>
+
+      <div id="reading-details" className="myForm">
+        <h1>Reading Details</h1>
+
+        <form action="#">
+          <label for="select-section">Jump to Section</label>
+          <select id="select-section"></select>
+
+          <label for="reading-title">Title</label>
+          <input type="text" id="reading-title" />
+
+          <label for="cover-image">Cover Image</label>
+          <input type="text" id="cover-image" />
+
+          <label for="lexile-average">Lexile Average</label>
+          <input type="text" id="lexile-average" />
+
+          <label for="casas-average">CASAS Average</label>
+          <input type="text" id="casas-average" />
+
+          <label for="goal-align">Goal Align</label>
+          <input type="text" id="goal-align" />
+
+          <label for="genre">Genre</label>
+          <input type="text" id="genre" />
+
+          <label for="license">License</label>
+          <input type="text" id="license" />
+
+          <label for="license-expires">License Expires</label>
+          <input type="text" id="license-expires" />
+
+          <label for="synopsis">Synopsis</label>
+          <input type="text" id="synopsis" />
+
+          <label for="notes">Notes</label>
+          <input type="text" id="notes" />
+
+          <label for="links">Links to resources</label>
+          <input type="text" id="links" />
+
+          <button id="save-detail">Save</button>
+        </form>
+      </div>
+
+      <div id="section-details">
+        <h1>Section Details</h1>
+        <form>
+            <label for="reading-title-2">Reading Title</label>
+            <input type="text" id="reading-title-2" readonly />
+
+            <label for="section-title">Section Title</label>
+            <input type="text" id="section-title" />
+
+            <label for="blocktext">Block Text</label>
+            <textarea rows="12" cols="60" id="blocktext"></textarea>
+        </form>
+        <button id="save-section">Save</button>
+
+      </div>
+
+
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="data/books.js"></script>
+  </body>
+</html>

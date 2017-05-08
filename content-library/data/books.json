@@ -1,0 +1,28 @@
+{
+  "data": {
+    "books": [
+      {
+        "id": "1",
+        "title": "War and Peace",
+        "author": "Leo Tolstoy",
+        "src": "https://images-na.ssl-images-amazon.com/images/I/510UE7bvHoL._SX329_BO1,204,203,200_.jpg",
+        "sections": [
+          "Chapter One",
+          "Chapter Two",
+          "Chapter Three"
+        ]
+      },
+      {
+        "id": "2",
+        "title": "Adventures of Huckleberry Finn",
+        "author": "Mark Twain",
+        "src": "https://t3.gstatic.com/images?q=tbn:ANd9GcTlt9xiIUoK482kv33_52nUhmXi7lIC1cyHOgmxTQLX9YJtRMZZ",
+        "sections": [
+          "Civilizing Huck",
+          "Miss Watson",
+          "Tom Sawyer Waits"
+        ]
+      }
+    ]
+  }
+}
