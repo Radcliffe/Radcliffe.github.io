@@ -20,16 +20,18 @@
   </head>
   <body>
     <div class="container">
-      <div id="book-rack">
+      <div id="book-rack" class="page">
         <h1>GogyUp Content Manager</h1>
         <button id="add-reading">Add Reading</button>
         <div id="book-rack-items" class="grid"></div>
       </div>
 
-      <div id="reading-details" className="myForm">
+      <div id="reading-details" class="page">
         <h1>Reading Details</h1>
+        <button id="add-section">Add New Section</button>
 
-        <form action="#">
+        <form class="myForm" action="#">
+
           <label for="select-section">Jump to Section</label>
           <select id="select-section"></select>
 
@@ -66,11 +68,11 @@
           <label for="links">Links to resources</label>
           <input type="text" id="links" />
 
-          <button id="save-detail">Save</button>
+          <button id="save-reading-details">Save</button>
         </form>
       </div>
 
-      <div id="section-details">
+      <div id="section-details" class="page">
         <h1>Section Details</h1>
         <form>
             <label for="reading-title-2">Reading Title</label>
@@ -82,7 +84,7 @@
             <label for="blocktext">Block Text</label>
             <textarea rows="12" cols="60" id="blocktext"></textarea>
         </form>
-        <button id="save-section">Save</button>
+        <button id="save-section-details">Save</button>
 
       </div>
 

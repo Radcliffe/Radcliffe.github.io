@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  const books = data.books;
   var book;
   var section;
   const bookRack = $('#book-rack');
@@ -6,20 +7,48 @@ $(document).ready(() => {
   const readingDetails = $('#reading-details');
   const selectSection = $('#select-section');
   const sectionDetails = $('#section-details');
+  const pages = $('.page');
 
-  readingDetails.hide();
-  sectionDetails.hide();
+  redrawBookRack();
 
-  const books = data.books;
-
-  function redraw() {
+  function redrawBookRack() {
     bookRackItems.empty();
     books.forEach((book, index) => {
       bookRackItems.append(makeCard(book, index));
     });
+    pages.hide();
+    bookRack.show();
   }
 
-  redraw();
+  function redrawReadingDetails() {
+    let sections = book.sections || [];
+    selectSection.empty();
+    selectSection.append($('<option></option').text('Choose Reading Section').attr('value', -1));
+    sections.forEach((section, index) => {
+        let option = $('<option></option>').text(section.title).attr('value', index);
+        selectSection.append(option);
+    });
+    $('#reading-title').val(book.title);
+    $('#cover-image').val(book.src);
+    $('#lexile-average').val(book.lexileAverage);
+    $('#casas-average').val(book.casasAverage);
+    $('#goal-align').val(book.goalAlign);
+    $('#genre').val(book.genre);
+    $('#license').val(book.license);
+    $('#license-expires').val(book.licenseExpires);
+    $('#notes').val(book.notes);
+    $('#links').val(book.links);
+    pages.hide();
+    readingDetails.show();
+  }
+
+  function redrawSectionDetails() {
+    $('#reading-title-2').val(book.title);
+    $('#section-title').val(section.title);
+    $('#blocktext').val(section.blocktext);
+    pages.hide();
+    sectionDetails.show();
+  }
 
   function makeCard(book, index) {
     console.log('makeCard');
@@ -39,31 +68,11 @@ $(document).ready(() => {
     console.log('clickGrid');
     const bookIndex = event.target.closest('.item').className.split('-')[1];
     book = books[bookIndex-1];
-    let sections = book.sections || [];
-    selectSection.empty();
-    selectSection.append($('<option></option').text('Choose Reading Section').attr('value', -1));
-    sections.forEach((section, index) => {
-        let option = $('<option></option>').text(section.title).attr('value', index);
-        selectSection.append(option);
-    });
-    readingDetails.show();
-    bookRack.hide();
-    $('#reading-title').val(book.title);
-    $('#cover-image').val(book.src);
-    $('#lexile-average').val(book.lexileAverage);
-    $('#casas-average').val(book.casasAverage);
-    $('#goal-align').val(book.goalAlign);
-    $('#genre').val(book.genre);
-    $('#license').val(book.license);
-    $('#license-expires').val(book.licenseExpires);
-    $('#notes').val(book.notes);
-    $('#links').val(book.links);
+    redrawReadingDetails();
   });
 
-  $('#save-detail').click((event) => {
-    console.log('saveDetail');
-    bookRack.show();
-    readingDetails.hide();
+  $('#save-reading-details').click((event) => {
+    console.log('save-reading-details');
     book.title = $('#reading-title').val();
     book.src = $('#cover-image').val();
     book.lexileAverage = $('#lexile-average').val();
@@ -74,6 +83,7 @@ $(document).ready(() => {
     book.licenseExpires = $('#license-expires').val();
     book.notes = $('#notes').val();
     book.links = $('#links').val();
+    redrawBookRack();
   });
 
   $('#select-section').change((event) => {
@@ -81,29 +91,36 @@ $(document).ready(() => {
     if (sectionIndex == '-1') return false;
     console.log('section', sectionIndex);
     section = book.sections[sectionIndex];
-    console.log(section);
-    $('#reading-title-2').val(book.title);
-    $('#section-title').val(section.title);
-    $('#blocktext').val(section.blocktext);
-    readingDetails.hide();
-    sectionDetails.show();
+    redrawSectionDetails();
   });
-  // addNewBook = () => {
-  //   let books = this.state.books;
-  //   books.unshift({
-  //     id: Date.now(),
-  //     title: 'New reading',
-  //     src: '/logo1.png'
-  //   });
-  //   this.setState({books});
+
+  $('#save-section-details').click((event) => {
+    console.log('#save-section-details');
+    section.title = $('#section-title').val();
+    section.blocktext = $('#blocktext').val();
+    redrawReadingDetails();
+  });
 
   $('#add-reading').click((event) => {
-    books.unshift({
+    console.log('add-reading');
+    book = {
       id: Date.now(),
       title: 'New reading',
       author: '',
+      sections: [],
       src: 'logo1.png'
-    });
-    redraw();
+    };
+    books.unshift(book);
+    redrawReadingDetails();
+  });
+
+  $('#add-section').click((event) => {
+    console.log('add-section');
+    section = {
+      id: Date.now(),
+      title: 'New section'
+    };
+    book.sections.push(section);
+    redrawSectionDetails();
   });
 });
