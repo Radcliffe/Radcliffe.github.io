@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <title>GogyUp Content Manager</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,6 @@
 
       <div id="reading-details" class="page">
         <h1>Reading Details</h1>
-        <button id="add-section">Add New Section</button>
 
         <form class="myForm" action="#">
 
@@ -38,17 +37,24 @@
           <label for="reading-title">Title</label>
           <input type="text" id="reading-title" />
 
+          <label for="author">Author</label>
+          <input type="text" id="author" />
+
           <label for="cover-image">Cover Image</label>
           <input type="text" id="cover-image" />
 
-          <label for="lexile-average">Lexile Average</label>
+          <label for="lexile-average">Lexile Range</label>
           <input type="text" id="lexile-average" />
 
-          <label for="casas-average">CASAS Average</label>
+          <label for="casas-average">CASAS Range</label>
           <input type="text" id="casas-average" />
 
           <label for="goal-align">Goal Align</label>
-          <input type="text" id="goal-align" />
+          <select multiple id="goal-align">
+            <option value="Citizenship">Citizenship</option>
+            <option value="GED Prep">GED Prep</option>
+            <option value="College Prep">College Prep</option>
+          </select>
 
           <label for="genre">Genre</label>
           <input type="text" id="genre" />
@@ -68,8 +74,9 @@
           <label for="links">Links to resources</label>
           <input type="text" id="links" />
 
-          <button id="save-reading-details">Save</button>
         </form>
+        <button id="save-reading-details">Save &amp; Close</button>
+        <button id="add-section">Save &amp; Add New Section</button>
       </div>
 
       <div id="section-details" class="page">

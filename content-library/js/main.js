@@ -1,7 +1,6 @@
 $(document).ready(() => {
   const books = data.books;
-  var book;
-  var section;
+  let book, section;
   const bookRack = $('#book-rack');
   const bookRackItems = $('#book-rack-items');
   const readingDetails = $('#reading-details');
@@ -23,11 +22,17 @@ $(document).ready(() => {
   function redrawReadingDetails() {
     let sections = book.sections || [];
     selectSection.empty();
-    selectSection.append($('<option></option').text('Choose Reading Section').attr('value', -1));
-    sections.forEach((section, index) => {
-        let option = $('<option></option>').text(section.title).attr('value', index);
+    selectSection
+      .append($('<option></option')
+      .text('Choose Reading Section')
+      .attr('value', -1));
+    sections
+      .forEach((section, index) => {
+        let option = $('<option></option>')
+          .text(section.title)
+          .attr('value', index);
         selectSection.append(option);
-    });
+      });
     $('#reading-title').val(book.title);
     $('#cover-image').val(book.src);
     $('#lexile-average').val(book.lexileAverage);
