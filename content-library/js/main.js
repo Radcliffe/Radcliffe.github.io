@@ -63,7 +63,6 @@ function runApp(data) {
   }
 
   function makeCard(book, index) {
-    console.log('makeCard');
     return $(`
       <div class="item item-${index+1}" >
         <div class="card">
@@ -77,14 +76,12 @@ function runApp(data) {
     };
 
   $('.grid').click((event) => {
-    console.log('clickGrid');
     const bookIndex = event.target.closest('.item').className.split('-')[1];
     book = books[bookIndex-1];
     redrawReadingDetails();
   });
 
   $('#save-reading-details, #save-reading-details-2').click((event) => {
-    console.log('save-reading-details');
     book.title = $('#reading-title').val();
     book.author = $('#author').val();
     book.src = $('#cover-image').val();
@@ -103,20 +100,17 @@ function runApp(data) {
   $('#select-section').change((event) => {
     let sectionIndex = $('#select-section').val();
     if (sectionIndex == '-1') return false;
-    console.log('section', sectionIndex);
     section = book.sections[sectionIndex];
     redrawSectionDetails();
   });
 
   $('#save-section-details').click((event) => {
-    console.log('#save-section-details');
     section.title = $('#section-title').val();
     section.blocktext = $('#blocktext').val();
     redrawReadingDetails();
   });
 
   $('#add-reading').click((event) => {
-    console.log('add-reading');
     book = {
       id: Date.now(),
       title: 'New reading',
@@ -129,7 +123,6 @@ function runApp(data) {
   });
 
   $('#add-section, #add-section-2').click((event) => {
-    console.log('add-section');
     section = {
       id: Date.now(),
       title: 'New section'
