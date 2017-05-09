@@ -1,20 +1,42 @@
 $(document).ready(() => {
-  firebase.database().ref().once('value')
-    .then(function(snapshot) {return snapshot.val();})
-    .then(function(data) {runApp(data);})
-});
+  $('.page').hide();
+  let data = {books: []};
+  let books = [], book, section, signedIn = false
 
-function runApp(data) {
-  const books = data.books;
-  let book, section;
+  function init(d) {
+    data = d;
+    books = data.books;
+    book = undefined;
+    section = undefined;
+  }
+
   const bookRack = $('#book-rack');
   const bookRackItems = $('#book-rack-items');
   const readingDetails = $('#reading-details');
   const selectSection = $('#select-section');
   const sectionDetails = $('#section-details');
   const pages = $('.page');
+  const signInButton = $('#sign-in-button');
+  const signOutButton = $('#sign-out-button');
 
   redrawBookRack();
+
+  signInButton.click((event) => {
+    event.preventDefault();
+    signedIn = true;
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+    firebase.database().ref().once('value')
+      .then(function(snapshot) {return snapshot.val();})
+      .then(function(data) {init(data);})
+      .then(redrawBookRack);
+  });
+
+  signOutButton.click((event) => {
+    event.preventDefault();
+    signedIn = false;
+    firebase.auth().signOut();
+  });
 
   function redrawBookRack() {
     bookRackItems.empty();
@@ -65,6 +87,12 @@ function runApp(data) {
   function makeCard(book, index) {
     return $(`
       <div class="item item-${index+1}" >
+        <div class="hover-btn">
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
         <div class="card">
           <img class="card-img-top" src=${book.src} alt=${book.title} height="150" />
           <div class="text">
@@ -75,13 +103,20 @@ function runApp(data) {
       </div>`);
     };
 
-  $('.grid').click((event) => {
+  $('.grid').on('click', '.hover-btn', (event) => {
+    const bookIndex = event.target.closest('.item').className.split('-')[1];
+    books.splice(bookIndex-1, 1);
+    redrawBookRack();
+  });
+
+  $('.grid').on('click', '.card', (event) => {
     const bookIndex = event.target.closest('.item').className.split('-')[1];
     book = books[bookIndex-1];
+    if (signedIn) firebase.database().ref().update(data);
     redrawReadingDetails();
   });
 
-  $('#save-reading-details, #save-reading-details-2').click((event) => {
+  function saveReadingDetails() {
     book.title = $('#reading-title').val();
     book.author = $('#author').val();
     book.src = $('#cover-image').val();
@@ -93,8 +128,12 @@ function runApp(data) {
     book.licenseExpires = $('#license-expires').val();
     book.notes = $('#notes').val();
     book.links = $('#links').val();
+    if (signedIn) firebase.database().ref().update(data);
+  };
+
+  $('#save-reading-details, #save-reading-details-2').click((event) => {
+    saveReadingDetails();
     redrawBookRack();
-    return firebase.database().ref().update(data);
   });
 
   $('#select-section').change((event) => {
@@ -123,6 +162,7 @@ function runApp(data) {
   });
 
   $('#add-section, #add-section-2').click((event) => {
+    saveReadingDetails();
     section = {
       id: Date.now(),
       title: 'New section'
@@ -130,4 +170,4 @@ function runApp(data) {
     book.sections.push(section);
     redrawSectionDetails();
   });
-};
+});

@@ -20,6 +20,19 @@
     <![endif]-->
   </head>
   <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a><button id="sign-in-button" class="btn btn-primary">Sign In</button></a>
+          </li>
+          <li><a><button id="sign-out-button" class="btn btn-info">Sign Out</button></a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </nav>
+
     <div class="container">
       <div id="book-rack" class="page">
         <h1>GOGY<strong>UP</strong> Content Manager</h1>
@@ -113,8 +126,6 @@
         messagingSenderId: "1061407254254"
       };
       firebase.initializeApp(config);
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider);
     </script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
