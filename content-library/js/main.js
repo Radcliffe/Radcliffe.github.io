@@ -76,7 +76,7 @@ $(document).ready(() => {
     redrawReadingDetails();
   });
 
-  $('#save-reading-details').click((event) => {
+  $('#save-reading-details, #save-reading-details-2').click((event) => {
     console.log('save-reading-details');
     book.title = $('#reading-title').val();
     book.src = $('#cover-image').val();
@@ -119,7 +119,7 @@ $(document).ready(() => {
     redrawReadingDetails();
   });
 
-  $('#add-section').click((event) => {
+  $('#add-section, #add-section-2').click((event) => {
     console.log('add-section');
     section = {
       id: Date.now(),

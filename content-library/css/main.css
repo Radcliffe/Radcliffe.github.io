@@ -1,6 +1,19 @@
-.App {
+body {
+  background-color: #5579ab;
+}
+.container {
   padding: 40px;
 }
+h1 {
+	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+	font-size: 36px;
+  color: white;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 39.6px;
+}
+
 .grid {
   padding: 10px;
   display: grid;
@@ -11,6 +24,7 @@
 .grid > .item  {
   border: 1px solid #ccc;
   box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+  background-color: white;
 }
 .grid > .item img {
   padding: 10px;
@@ -60,7 +74,7 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-.myForm {
+form {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
