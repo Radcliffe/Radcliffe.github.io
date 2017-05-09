@@ -1,4 +1,10 @@
 $(document).ready(() => {
+  firebase.database().ref().once('value')
+    .then(function(snapshot) {return snapshot.val();})
+    .then(function(data) {runApp(data);})
+});
+
+function runApp(data) {
   const books = data.books;
   let book, section;
   const bookRack = $('#book-rack');
@@ -34,6 +40,7 @@ $(document).ready(() => {
         selectSection.append(option);
       });
     $('#reading-title').val(book.title);
+    $('#author').val(book.author);
     $('#cover-image').val(book.src);
     $('#lexile-average').val(book.lexileAverage);
     $('#casas-average').val(book.casasAverage);
@@ -79,6 +86,7 @@ $(document).ready(() => {
   $('#save-reading-details, #save-reading-details-2').click((event) => {
     console.log('save-reading-details');
     book.title = $('#reading-title').val();
+    book.author = $('#author').val();
     book.src = $('#cover-image').val();
     book.lexileAverage = $('#lexile-average').val();
     book.casasAverage = $('#casas-average').val();
@@ -89,6 +97,7 @@ $(document).ready(() => {
     book.notes = $('#notes').val();
     book.links = $('#links').val();
     redrawBookRack();
+    return firebase.database().ref().update(data);
   });
 
   $('#select-section').change((event) => {
@@ -128,4 +137,4 @@ $(document).ready(() => {
     book.sections.push(section);
     redrawSectionDetails();
   });
-});
+};

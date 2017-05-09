@@ -34,7 +34,7 @@
         <form>
 
           <label for="select-section">Jump to Section</label>
-          <select id="select-section"></select>
+          <select class="form-control" id="select-section"></select>
 
           <label for="reading-title">Title</label>
           <input type="text" id="reading-title" />
@@ -68,10 +68,10 @@
           <input type="text" id="license-expires" />
 
           <label for="synopsis">Synopsis</label>
-          <input type="text" id="synopsis" />
+          <textarea rows="12" cols="60" id="synopsis"></textarea>
 
           <label for="notes">Notes</label>
-          <input type="text" id="notes" />
+          <textarea rows="12" cols="60" id="notes"></textarea>
 
           <label for="links">Links to resources</label>
           <input type="text" id="links" />
@@ -99,11 +99,28 @@
 
 
     </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBirdGhWnjX8lHXq-mdCbVtSj4jl6m87Uo",
+        authDomain: "literacy-2c43b.firebaseapp.com",
+        databaseURL: "https://literacy-2c43b.firebaseio.com",
+        projectId: "literacy-2c43b",
+        storageBucket: "literacy-2c43b.appspot.com",
+        messagingSenderId: "1061407254254"
+      };
+      firebase.initializeApp(config);
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider);
+    </script>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="data/books.js"></script>
   </body>
 </html>
