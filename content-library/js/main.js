@@ -1,14 +1,8 @@
 $(document).ready(() => {
   $('.page').hide();
   let data = {books: []};
-  let books = [], book, section, signedIn = false
-
-  function init(d) {
-    data = d;
-    books = data.books;
-    book = undefined;
-    section = undefined;
-  }
+  let books = [], book, section;
+  let currentUID;
 
   const bookRack = $('#book-rack');
   const bookRackItems = $('#book-rack-items');
@@ -23,20 +17,40 @@ $(document).ready(() => {
 
   signInButton.click((event) => {
     event.preventDefault();
-    signedIn = true;
     let provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
-    firebase.database().ref().once('value')
-      .then(function(snapshot) {return snapshot.val();})
-      .then(function(data) {init(data);})
-      .then(redrawBookRack);
   });
 
   signOutButton.click((event) => {
     event.preventDefault();
-    signedIn = false;
     firebase.auth().signOut();
   });
+
+  firebase.auth().onAuthStateChanged(onAuthStateChanged);
+
+  /**
+   * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
+   */
+  function onAuthStateChanged(user) {
+    // We ignore token refresh events.
+    if (user && currentUID === user.uid) {
+      return;
+    }
+    if (user) {
+      currentUID = user.uid;
+      firebase.database().ref().once('value')
+        .then(function(snapshot) {return snapshot.val();})
+        .then(function(d) {
+          data = d;
+          books = data.books;
+          book = undefined;
+          section = undefined;
+          redrawBookRack();
+        });
+    } else {
+      currentUID = null;
+    }
+  }
 
   function redrawBookRack() {
     bookRackItems.empty();
@@ -112,7 +126,7 @@ $(document).ready(() => {
   $('.grid').on('click', '.card', (event) => {
     const bookIndex = event.target.closest('.item').className.split('-')[1];
     book = books[bookIndex-1];
-    if (signedIn) firebase.database().ref().update(data);
+    if (currentUID) firebase.database().ref().update(data);
     redrawReadingDetails();
   });
 
@@ -128,7 +142,7 @@ $(document).ready(() => {
     book.licenseExpires = $('#license-expires').val();
     book.notes = $('#notes').val();
     book.links = $('#links').val();
-    if (signedIn) firebase.database().ref().update(data);
+    if (currentUID) firebase.database().ref().update(data);
   };
 
   $('#save-reading-details, #save-reading-details-2').click((event) => {
