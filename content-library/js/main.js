@@ -120,22 +120,21 @@ $(document).ready(() => {
     } else {
       currentUID = null;
     }
-    $pages.css('visibility', 'visible');
   }
 
 /*****************************************
  *    Reading list
  *****************************************/
 
-  function redrawReadingList(delay) {
-    if (delay === undefined) delay = 250;
-    $pages.hide(delay);
+  function redrawReadingList() {
+    $pages.removeClass('active');
     // console.log('redrawReadingList');
     $readingListItems.empty();
     readings.forEach((r, index) => {
       $readingListItems.append(makeCard(r, index));
     });
-    $readingList.show(delay);
+
+    $readingList.addClass('active');
   }
 
   function makeCard(reading, index) {
@@ -208,8 +207,8 @@ $(document).ready(() => {
     $readingSynopsis.val(currentReading.synopsis);
     $readingNotes.val(currentReading.notes);
     $readingLinks.val(currentReading.links);
-    $pages.hide(250);
-    $readingDetails.show(250);
+    $pages.removeClass('active');
+    $readingDetails.addClass('active');
   }
 
   function saveReadingDetails() {
@@ -266,8 +265,8 @@ $(document).ready(() => {
     $sectionReadingTitle.val(currentReading.title);
     $sectionTitle.val(currentSection.title);
     $sectionBlocktext.val(currentSection.blocktext);
-    $pages.hide(250);
-    $sectionDetails.show(250);
+    $pages.removeClass('active');
+    $sectionDetails.addClass('active');
   }
 
   $saveSectionDetails.click((event) => {
@@ -316,7 +315,6 @@ $(document).ready(() => {
 
   function redrawVocabulary() {
     // console.log('$redrawVocabulary');
-    $pages.hide(250);
     $vocabReadingTitle.val(currentReading.title);
     $vocabSectionTitle.val(currentSection.title);
     $vocabParagraph.val(currentVocab.paragraph);
@@ -327,7 +325,8 @@ $(document).ready(() => {
     $vocabSchoolClass.val(currentVocab.schoolClass);
     $vocabStudentName.val(currentVocab.studentName);
     $vocabIncludeName.val(currentVocab.includeName);
-    $vocabulary.show(250);
+    $pages.removeClass('active');
+    $vocabulary.addClass('active');
   };
 
   $saveVocab.click((event) => {
@@ -355,7 +354,6 @@ $(document).ready(() => {
 
   function redrawComprehension() {
     // console.log('redrawComprehension');
-    $pages.hide(250);
     $compReadingTitle.val(currentReading.title);
     $compSectionTitle.val(currentSection.title);
     $compParagraph.val(currentComp.paragraph);
@@ -366,7 +364,8 @@ $(document).ready(() => {
     $compSchoolClass.val(currentComp.schoolClass);
     $compStudentName.val(currentComp.studentName);
     $compIncludeName.val(currentComp.includeName);
-    $comprehension.show(250);
+    $pages.removeClass('active');
+    $comprehension.addClass('active');
   };
 
   $addComprehension.click((event) => {

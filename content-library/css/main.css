@@ -8,7 +8,11 @@ body {
   background-color: #e0eeee;
 }
 .page {
-  visibility: hidden;
+  display: none;
+}
+
+.page.active {
+  display: block;
 }
 
 h1 {
